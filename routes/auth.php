@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RegisterMahasiswaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -56,4 +58,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    Route::group(['prefix' => 'admin/mahasiswa'], function () {
+        Route::get('/', [RegisterMahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
+        Route::get('create', [RegisterMahasiswaController::class, 'create'])->name('admin.mahasiswa.create');
+        Route::post('store', [RegisterMahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
+        Route::get('{user}/edit', [RegisterMahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
+        Route::put('{user}', [RegisterMahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
+        Route::delete('{user}', [RegisterMahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
+    });
 });
