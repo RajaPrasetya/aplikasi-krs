@@ -67,8 +67,16 @@
                 </header>
             @endisset
             <!-- Page Content -->
-            <main>
+            <main class="p-6">
                 {{ $slot }}
+                @if (session('success'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+                        class="toast toast-top toast-center">
+                        <div class="alert alert-success">
+                            <span>{{ session('success') }}</span>
+                        </div>
+                    </div>
+                @endif
             </main>
         </div>
         <div class="drawer-side">
@@ -76,35 +84,17 @@
                 <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                 <!-- Sidebar content here -->
                 <div class="shrink-0 mx-auto py-3 px-4 sm:px-6 lg:px-8 ">
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a {{ $attributes }}>
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-                <li><a>Item 1</a></li>
-                <li>
-                    <details open>
-                        <summary>Parent</summary>
-                        <ul>
-                            <li><a>Submenu 1</a></li>
-                            <li><a>Submenu 2</a></li>
-                            <li>
-                                <details open>
-                                    <summary>Parent</summary>
-                                    <ul>
-                                        <li><a>Submenu 1</a></li>
-                                        <li><a>Submenu 2</a></li>
-                                    </ul>
-                                </details>
-                            </li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a>Item 3</a></li>
+                @isset($sidebar)
+                    {{ $sidebar }}
+                @endisset
             </ul>
         </div>
     </div>
 
-</body>
 </body>
 
 </html>
