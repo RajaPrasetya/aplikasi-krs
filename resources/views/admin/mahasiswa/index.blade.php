@@ -1,5 +1,3 @@
-{{ $mahasiswa->links() }}
-
 <x-admin-layout>
     <x-slot:header>
         {{ __('Daftar Mahasiswa') }}
@@ -15,15 +13,17 @@
             <th class="border border-slate-600 text-center">Alamat</th>
             <th class="border border-slate-600 text-center">Action</th>
         </x-slot:head>
-        @forelse ($mahasiswa as $mhs)
+        @forelse ($mahasiswas as $mhs)
             <tr class="border border-slate-600 text-center">
                 <td class="border border-slate-600 text-center">{{ $mhs->NIM }}</td>
                 <td class="border border-slate-600 text-center">{{ $mhs->name }}</td>
                 <td class="border border-slate-600 text-center">{{ $mhs->email }}</td>
                 <td class="border border-slate-600 text-center">{{ $mhs->address }}</td>
                 <td class="border border-slate-600 text-center">
-                    <a href="" class="btn btn-sm btn-primary">Edit</a>
-                    <form action="" method="POST" class="inline">
+                    <a href="{{ route('admin.mahasiswa.edit', $mahasiswa = $mhs->NIM) }}"
+                        class="btn btn-sm btn-primary">Edit</a>
+                    <form action="{{ route('admin.mahasiswa.destroy', $mahasiswa = $mhs->NIM) }}" method="POST"
+                        class="inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-sm btn-error" type="submit">Delete</button>
@@ -36,4 +36,7 @@
             </tr>
         @endforelse
     </x-table>
+    <div class="mt-4 flex justify-center">
+        {{ $mahasiswas->links('vendor.pagination.custom') }}
+    </div>
 </x-admin-layout>

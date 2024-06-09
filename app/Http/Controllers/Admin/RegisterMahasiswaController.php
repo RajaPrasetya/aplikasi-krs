@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -17,8 +18,8 @@ class RegisterMahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswa = User::where('user_type', 'mahasiswa')->paginate(10);
-        return view('admin.mahasiswa.index', ['mahasiswa' => $mahasiswa]);
+        $mahasiswa = User::where('user_type', 'mahasiswa')->paginate(5);
+        return view('admin.mahasiswa.index', ['mahasiswas' => $mahasiswa]);
     }
 
     /**
@@ -67,7 +68,7 @@ class RegisterMahasiswaController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.mahasiswa.edit', ['mahasiswa' => $user]);
     }
 
     /**
@@ -75,7 +76,21 @@ class RegisterMahasiswaController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->fill($request->validate(
+        [
+            'NIM' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user->NIM, 'NIM')],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->NIM, 'NIM')],
+        ]
+    ));
+
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
+    }
+
+    $user->save();
+
+    return redirect(route('admin.mahasiswa.index', absolute: false))->with('success', 'Mahasiswa berhasil diubah');
     }
 
     /**
@@ -83,6 +98,8 @@ class RegisterMahasiswaController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+
+        $user->delete();
+        return redirect(route('admin.mahasiswa.index', absolute: false))->with('success', 'Mahasiswa berhasil dihapus');
     }
 }

@@ -62,7 +62,12 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
-    Route::get('admin/mahasiswa', [RegisterMahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
-    Route::get('admin/mahasiswa/create', [RegisterMahasiswaController::class, 'create'])->name('admin.mahasiswa.create');
-    Route::post('admin/mahasiswa', [RegisterMahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
+    Route::group(['prefix' => 'admin/mahasiswa'], function () {
+        Route::get('/', [RegisterMahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
+        Route::get('create', [RegisterMahasiswaController::class, 'create'])->name('admin.mahasiswa.create');
+        Route::post('store', [RegisterMahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
+        Route::get('{user}/edit', [RegisterMahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
+        Route::put('{user}', [RegisterMahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
+        Route::delete('{user}', [RegisterMahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
+    });
 });
