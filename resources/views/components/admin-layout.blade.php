@@ -5,7 +5,7 @@
                 <summary>Data Master</summary>
                 <ul>
                     <li><a href="{{ route('admin.mahasiswa.index') }}">Mahasiswa</a></li>
-                    <li><a>Mata Kuliah</a></li>
+                    <li><a href="{{ route('admin.matakuliah.index') }}">Mata Kuliah</a></li>
                 </ul>
             </details>
         </li>

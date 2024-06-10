@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\Admin\RegisterMahasiswaController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Admin\RegisterMahasiswaController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\MatakuliahController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -69,5 +70,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('{user}/edit', [RegisterMahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
         Route::put('{user}', [RegisterMahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
         Route::delete('{user}', [RegisterMahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
+    });
+    Route::group(['prefix' => 'admin/matakuliah'], function () {
+        Route::get('/', [MatakuliahController::class, 'index'])->name('admin.matakuliah.index');
+        Route::get('create', [MatakuliahController::class, 'create'])->name('admin.matakuliah.create');
+        Route::post('store', [MatakuliahController::class, 'store'])->name('admin.matakuliah.store');
+        Route::get('{matakuliah}/edit', [MatakuliahController::class, 'edit'])->name('admin.matakuliah.edit');
+        Route::put('{matakuliah}', [MatakuliahController::class, 'update'])->name('admin.matakuliah.update');
+        Route::delete('{matakuliah}', [MatakuliahController::class, 'destroy'])->name('admin.matakuliah.destroy');
     });
 });

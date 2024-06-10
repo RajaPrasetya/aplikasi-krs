@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Matakuliah;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 
 class MatakuliahController extends Controller
 {
@@ -12,7 +14,8 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        //
+        $matakuliah = Matakuliah::orderBy('semester', 'asc')->paginate(5);
+        return view('admin.matakuliah.index', ['matakuliahs' => $matakuliah]);
     }
 
     /**
@@ -20,7 +23,7 @@ class MatakuliahController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.matakuliah.create');
     }
 
     /**
@@ -28,7 +31,16 @@ class MatakuliahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kode_mk' => ['required', 'string', 'max:255', 'unique:'.Matakuliah::class],
+            'nama_mk' => ['required', 'string', 'max:255'],
+            'semester' => ['required', 'integer'],
+            'sks' => ['required', 'integer'],
+        ]);
+
+        Matakuliah::create($request->all());
+
+        return redirect(route('admin.matakuliah.index', absolute: false))->with('success', 'Matakuliah berhasil ditambahkan');
     }
 
     /**
@@ -44,7 +56,7 @@ class MatakuliahController extends Controller
      */
     public function edit(Matakuliah $matakuliah)
     {
-        //
+        return view('admin.matakuliah.edit', ['mk' => $matakuliah]);
     }
 
     /**
@@ -52,7 +64,16 @@ class MatakuliahController extends Controller
      */
     public function update(Request $request, Matakuliah $matakuliah)
     {
-        //
+        $matakuliah->fill($request->validate([
+            'kode_mk' => ['required', 'string', 'max:6', Rule::unique(Matakuliah::class)->ignore(str_pad($matakuliah->kode_mk, 6, '0', STR_PAD_LEFT), 'kode_mk')],
+            'nama_mk' => ['required', 'string', 'max:255'],
+            'semester' => ['required', 'integer'],
+            'sks' => ['required', 'integer'],
+        ]));
+
+        $matakuliah->save();
+
+        return redirect(route('admin.matakuliah.index', absolute: false))->with('success', 'Matakuliah berhasil diperbarui');
     }
 
     /**
@@ -60,6 +81,8 @@ class MatakuliahController extends Controller
      */
     public function destroy(Matakuliah $matakuliah)
     {
-        //
+        $matakuliah->delete();
+
+        return redirect(route('admin.matakuliah.index', absolute: false))->with('success', 'Matakuliah berhasil dihapus');
     }
 }
