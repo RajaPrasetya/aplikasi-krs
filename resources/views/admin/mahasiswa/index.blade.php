@@ -20,8 +20,10 @@
                 <td class="border border-slate-600 text-center">{{ $mhs->email }}</td>
                 <td class="border border-slate-600 text-center">{{ $mhs->address }}</td>
                 <td class="border border-slate-600 text-center">
+                    <a href="{{ route('admin.mahasiswa.show', $mahasiswa = $mhs->NIM) }}"
+                        class="btn btn-sm btn-primary">View</a>
                     <a href="{{ route('admin.mahasiswa.edit', $mahasiswa = $mhs->NIM) }}"
-                        class="btn btn-sm btn-primary">Edit</a>
+                        class="btn btn-sm btn-accent">Edit</a>
                     <form action="{{ route('admin.mahasiswa.destroy', $mahasiswa = $mhs->NIM) }}" method="POST"
                         class="inline">
                         @csrf

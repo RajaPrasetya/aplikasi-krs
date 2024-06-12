@@ -67,6 +67,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [RegisterMahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
         Route::get('create', [RegisterMahasiswaController::class, 'create'])->name('admin.mahasiswa.create');
         Route::post('store', [RegisterMahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
+        Route::get('{user}', [RegisterMahasiswaController::class, 'show'])->name('admin.mahasiswa.show');
         Route::get('{user}/edit', [RegisterMahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
         Route::put('{user}', [RegisterMahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
         Route::delete('{user}', [RegisterMahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
