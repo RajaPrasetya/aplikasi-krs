@@ -3,10 +3,9 @@
         <li>
             <details open>
                 <summary>Data Mahasiswa</summary>
-
                 <ul>
                     <li><a href="{{ route('users.krs.index') }}">KRS</a></li>
-                    <li><a href="#">KHS</a></li>
+                    <li><a href="{{route('users.khs.show')}}">KHS</a></li>
                 </ul>
             </details>
         </li>

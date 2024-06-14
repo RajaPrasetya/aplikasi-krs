@@ -17,5 +17,4 @@ class Matakuliah extends Model
     {
         return $this->belongsToMany(User::class, 'krs', 'kode_mk', 'NIM')->withPivot('nilai');
     }
-
 }

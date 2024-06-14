@@ -32,7 +32,7 @@ class MatakuliahController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_mk' => ['required', 'string', 'max:255', 'unique:'.Matakuliah::class],
+            'kode_mk' => ['required', 'string', 'max:255', 'unique:' . Matakuliah::class],
             'nama_mk' => ['required', 'string', 'max:255'],
             'semester' => ['required', 'integer'],
             'sks' => ['required', 'integer'],

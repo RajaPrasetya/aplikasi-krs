@@ -18,7 +18,9 @@ Route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.das
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix', 'mahasiswa'], function () {
         route::get('/krs', [krsController::class, 'index'])->name('users.krs.index');
-        route::get('/krs/create', [krsController::class, 'create'])->name('user.krs.create');
+        route::get('/krs/create', [krsController::class, 'create'])->name('users.krs.create');
+        route::post('/krs/store', [krsController::class, 'store'])->name('users.krs.store');
+        route::get('/khs', [krsController::class, 'show'])->name('users.khs.show');
     });
 });
 
