@@ -18,7 +18,7 @@
                 <td class="border border-slate-600 text-center">{{ $k->semester }}</td>
                 <td class="border border-slate-600 text-center">{{ $k->sks }}</td>
                 <td class="border border-slate-600 text-center">
-                    {{ $k->nilai == null ? 'nilai belum diinput' : $k->nilai }}</td>
+                    {{ $k->pivot->nilai == null ? 'Nilai Belum Diinput' : $k->pivot->nilai }}</td>
                 {{-- <td class="border border-slate-600 text-center">
                     <a href="#" class="btn btn-sm btn-primary">Edit</a>
                     <form action="#" method="POST" class="inline">

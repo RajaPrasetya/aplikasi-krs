@@ -48,7 +48,8 @@ class MatakuliahController extends Controller
      */
     public function show(Matakuliah $matakuliah)
     {
-        //
+        $mhs = $matakuliah->users()->get();
+        return view('admin.matakuliah.show', ['mk' => $matakuliah, 'mahasiswas' => $mhs]);
     }
 
     /**
@@ -57,6 +58,15 @@ class MatakuliahController extends Controller
     public function edit(Matakuliah $matakuliah)
     {
         return view('admin.matakuliah.edit', ['mk' => $matakuliah]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function editNilai(Matakuliah $matakuliah, $nim)
+    {
+        $mahasiswa = $matakuliah->users()->where('users.nim', $nim)->first();
+        return view('admin.matakuliah.editNilai', ['mk' => $matakuliah, 'mahasiswa' => $mahasiswa]);
     }
 
     /**
@@ -76,6 +86,15 @@ class MatakuliahController extends Controller
         return redirect(route('admin.matakuliah.index', absolute: false))->with('success', 'Matakuliah berhasil diperbarui');
     }
 
+    /**
+     * Update the specified user Nilai in KRS.
+     */
+    public function updateNilai(Request $request, Matakuliah $matakuliah, $nim)
+    {
+        $matakuliah->users()->updateExistingPivot($nim, ['nilai' => $request->nilai]);
+
+        return redirect(route('admin.matakuliah.show', str_pad($matakuliah->kode_mk, 6, '0', STR_PAD_LEFT), absolute: false))->with('success', 'Nilai berhasil diperbarui');
+    }
     /**
      * Remove the specified resource from storage.
      */
