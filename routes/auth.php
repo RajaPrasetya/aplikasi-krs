@@ -67,6 +67,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [RegisterMahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
         Route::get('create', [RegisterMahasiswaController::class, 'create'])->name('admin.mahasiswa.create');
         Route::post('store', [RegisterMahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
+        Route::get('{user}', [RegisterMahasiswaController::class, 'show'])->name('admin.mahasiswa.show');
         Route::get('{user}/edit', [RegisterMahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
         Route::put('{user}', [RegisterMahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
         Route::delete('{user}', [RegisterMahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
@@ -75,8 +76,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [MatakuliahController::class, 'index'])->name('admin.matakuliah.index');
         Route::get('create', [MatakuliahController::class, 'create'])->name('admin.matakuliah.create');
         Route::post('store', [MatakuliahController::class, 'store'])->name('admin.matakuliah.store');
+        Route::get('{matakuliah}', [MatakuliahController::class, 'show'])->name('admin.matakuliah.show');
         Route::get('{matakuliah}/edit', [MatakuliahController::class, 'edit'])->name('admin.matakuliah.edit');
+        Route::get('{matakuliah}/mahasiswa/{nim}', [MatakuliahController::class, 'editNilai'])->name('admin.matakuliah.editNilai');
         Route::put('{matakuliah}', [MatakuliahController::class, 'update'])->name('admin.matakuliah.update');
+        Route::put('{matakuliah}/nilai/{nim}', [MatakuliahController::class, 'updateNilai'])->name('admin.matakuliah.updateNilai');
         Route::delete('{matakuliah}', [MatakuliahController::class, 'destroy'])->name('admin.matakuliah.destroy');
     });
 });

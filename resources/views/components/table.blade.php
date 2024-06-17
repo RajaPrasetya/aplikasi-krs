@@ -1,4 +1,4 @@
-<div class="overflow-x-auto">
+<div>
     <table class="table border-collapse border border-slate-600">
         <!-- head -->
         <thead>
@@ -10,5 +10,8 @@
             <!-- row -->
             {{ $slot }}
         </tbody>
+        <tfoot>
+            {{ $footer ?? '' }}
+        </tfoot>
     </table>
 </div>

@@ -60,7 +60,9 @@ class RegisterMahasiswaController extends Controller
      */
     public function show(User $user)
     {
-        //
+        //show krs mahasiswa
+        $krs = $user->matakuliahs()->get();
+        return view('admin.mahasiswa.show', ['krs' => $krs]);
     }
 
     /**

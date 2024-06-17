@@ -12,4 +12,9 @@ class Matakuliah extends Model
     protected $table = 'matakuliahs';
     protected $primaryKey = 'kode_mk';
     protected $fillable = ['kode_mk', 'nama_mk', 'semester', 'sks'];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'krs', 'kode_mk', 'NIM')->withPivot('nilai');
+    }
 }
