@@ -20,6 +20,8 @@
                 <td class="border border-slate-600 text-center">{{ $mk->semester }}</td>
                 <td class="border border-slate-600 text-center">{{ $mk->sks }}</td>
                 <td class="border border-slate-600 text-center">
+                    <a href="{{ route('admin.matakuliah.show', $matakuliah = str_pad($mk->kode_mk, 6, '0', STR_PAD_LEFT)) }}"
+                        class="btn btn-sm btn-primary">View</a>
                     <a href="{{ route('admin.matakuliah.edit', $matakuliah = str_pad($mk->kode_mk, 6, '0', STR_PAD_LEFT)) }}"
                         class="btn btn-sm btn-primary">Edit</a>
                     <form action="{{ route('admin.matakuliah.destroy', $matakuliah = $mk->kode_mk) }}" method="POST"
