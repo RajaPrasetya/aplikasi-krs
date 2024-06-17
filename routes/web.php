@@ -7,7 +7,7 @@ use App\Http\Controllers\krsController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('mahasiswa/dashboard', [HomeController::class, 'mahasiswa'])->middleware(['auth'])->name('mahasiswa.dashboard');

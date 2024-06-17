@@ -35,9 +35,10 @@ class krsController extends Controller
     {
         $krs = Auth::user()->NIM;
         $krs = User::findOrFail($krs);
+
         foreach ($request->kode_mk as $kodeMK) {
             if (!$krs->matakuliahs()->where('matakuliahs.kode_mk')->exists())
-                $krs->matakuliahs()->attach($kodeMK, ['nilai' => 0]);
+                $krs->matakuliahs()->attach(str_pad($kodeMK, 6, '0', STR_PAD_LEFT), ['nilai' => 0]);
         }
         return redirect(route('users.krs.index', absolute: false))->with('success', 'KRS berhasil ditambahkan');
     }
